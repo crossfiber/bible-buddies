@@ -17,6 +17,7 @@ const ColoringScreen = (function () {
   let currentRGB = hexToRgb(cfg.crayons[0].hex);
   let undoStack = [];
   let outlineMask = null;    // fixed boundary mask for the current page (built on load)
+  let pageRegions = null;    // {label, sizes}: per-page regions, used only for tap-snap
   let busy = false;          // true while a fill runs — drops re-entrant taps
   let pageToken = 0;         // bumped on each load to void stale image callbacks
   let currentPage = null;    // the page now open, so "start over" can reload it clean
@@ -188,6 +189,10 @@ const ColoringScreen = (function () {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0);
       outlineMask = buildOutlineMask();
+      // Region labels + sizes let a near-miss tap snap to the smallest nearby shape (thin stems).
+      try {
+        pageRegions = outlineMask ? FloodFill.buildRegions(outlineMask, canvas.width, canvas.height) : null;
+      } catch (_) { pageRegions = null; }
       undoStack = [];
       busy = false;
       resetZoom();            // every new page starts fully zoomed out
@@ -232,6 +237,8 @@ const ColoringScreen = (function () {
       const changed = FloodFill.floodFill(work, pt.x, pt.y, currentRGB, {
         outlineLuma: cfg.outlineLuma,
         mask: outlineMask,
+        label: pageRegions && pageRegions.label,
+        sizes: pageRegions && pageRegions.sizes,
       });
       if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); }
     } catch (err) {
