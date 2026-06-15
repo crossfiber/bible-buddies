@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- Lock the viewport: no user zoom/scroll so toddler mashing can't break the layout. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Little Lights</title>
   <link rel="stylesheet" href="css/fonts.css" />
@@ -10,7 +9,6 @@
   <link rel="stylesheet" href="css/sections.css" />
 </head>
 <body>
-  <!-- Single-page app: screens, one visible at a time. Wrap-friendly for app stores. -->
   <main id="app" class="app">
 
     <!-- ===================== HOME ===================== -->
@@ -25,7 +23,7 @@
       </div>
     </section>
 
-    <!-- Parent gate + grown-ups panel (settings / privacy). Child-resistant hold-to-enter. -->
+    <!-- Parent gate -->
     <div class="gate-overlay" id="gate-overlay" hidden>
       <div class="gate-card" id="gate-step-hold">
         <p class="gate-title">Grown-ups only</p>
@@ -45,23 +43,25 @@
       </div>
     </div>
 
-    <!-- ===================== SECTIONS (picture categories) ===================== -->
+    <!-- ===================== SECTIONS ===================== -->
     <section class="screen" data-screen="sections" id="screen-sections" hidden>
-      <header class="bar">
-        <button class="nav-btn" data-nav="home" type="button" aria-label="Home">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 L24 10 L40 24" /><path d="M13 22 V38 H35 V22" /></svg>
-        </button>
-      </header>
+      <!-- The logo sits at the top and is the home button. -->
+      <button class="sections-logo" data-nav="home" type="button" aria-label="Home">
+        <img src="../assets/branding/logo.png" alt="Little Lights" draggable="false" />
+      </button>
       <div class="sections" id="sections-grid"></div>
     </section>
 
-    <!-- ===================== GALLERY (pages in a section) ===================== -->
+    <!-- ===================== GALLERY ===================== -->
     <section class="screen" data-screen="gallery" id="screen-gallery" hidden>
       <header class="bar">
         <button class="nav-btn" data-nav="sections" type="button" aria-label="Back to sections">
           <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="28,12 16,24 28,36" /></svg>
         </button>
         <h2 class="gallery-title" id="gallery-title"></h2>
+        <button class="bar-logo" data-nav="home" type="button" aria-label="Home">
+          <img src="../assets/branding/mascot.png" alt="" draggable="false" />
+        </button>
       </header>
       <div class="gallery" id="gallery-grid"></div>
     </section>
@@ -108,7 +108,6 @@
         </div>
       </footer>
 
-      <!-- Colour wheel: tap-anywhere hue/saturation picker + brightness, for older users. -->
       <div class="wheel-overlay" id="wheel-overlay" hidden>
         <div class="wheel-card">
           <canvas id="wheel-canvas" width="280" height="280" aria-label="Colour wheel"></canvas>
@@ -122,7 +121,6 @@
         </div>
       </div>
 
-      <!-- Start-over confirmation (so the trash button can't wipe work by accident). -->
       <div class="confirm-overlay" id="confirm-overlay" hidden>
         <div class="confirm-card">
           <p class="confirm-title">Start over?</p>
@@ -141,18 +139,15 @@
 
   </main>
 
-  <!-- data + engine -->
   <script src="js/config.js"></script>
   <script src="js/manifest.js"></script>
   <script src="js/pages.js"></script>
   <script src="js/floodfill.js"></script>
-  <!-- screens -->
   <script src="js/screens.js"></script>
   <script src="js/home.js"></script>
   <script src="js/sections.js"></script>
   <script src="js/gallery.js"></script>
   <script src="js/coloring.js"></script>
-  <!-- boot -->
   <script src="js/app.js"></script>
 </body>
 </html>

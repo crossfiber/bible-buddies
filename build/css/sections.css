@@ -37,3 +37,28 @@
 }
 .section-card.wiggle { animation: wiggle 360ms ease-in-out; }
 .gallery-title { margin: 0; flex: 1 1 auto; text-align: center; font-family: var(--display); font-weight: 400; font-size: clamp(18px, 5vmin, 30px); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* --- Header: the logo is the way home --- */
+/* Sections screen: no bar. The Little Lights logo sits at the top and IS the home button. */
+.sections-logo {
+  align-self: center;
+  margin: 0; padding: clamp(10px, 3vmin, 22px) 0 clamp(2px, 1vmin, 8px) 0;
+  background: transparent; border: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.sections-logo img {
+  width: clamp(150px, 42vmin, 250px); height: auto; display: block;
+  pointer-events: none; filter: drop-shadow(4px 4px 0 var(--ink));
+}
+.sections-logo:active { transform: translateY(2px); }
+
+/* A compact logo-home button living inside a .bar (gallery). */
+.bar-logo {
+  flex: 0 0 auto; display: grid; place-items: center;
+  margin: 0; padding: 0; background: transparent; border: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.bar-logo img {
+  height: clamp(42px, 11vmin, 62px); width: auto; display: block; pointer-events: none;
+}
+.bar-logo:active { transform: translateY(2px); }
