@@ -41,6 +41,7 @@ const ColoringScreen = (function () {
 
     buildRack();
     renderRecent();
+    setCurrentColor(cfg.crayons[0].hex);
     setupWheel();
     bindTap('btn-undo', undo);
     bindTap('btn-clear', askStartOver);                 // start-over asks first (see confirm)
@@ -78,7 +79,9 @@ const ColoringScreen = (function () {
     hex = hex.toUpperCase();
     currentRGB = hexToRgb(hex);
     for (const el of rack.children) el.setAttribute('aria-pressed', el.dataset.hex === hex ? 'true' : 'false');
+    setCurrentColor(hex);
   }
+  function setCurrentColor(css) { const c = document.getElementById('current-color'); if (c) c.style.background = css; }
   // Pick a NEW colour (crayon or wheel): apply it and remember it at the front of recents.
   function pickColour(hex) { applyColour(hex); addRecent(hex); }
   function addRecent(hex) {
@@ -157,6 +160,7 @@ const ColoringScreen = (function () {
     for (const el of rack.children) el.setAttribute('aria-pressed', 'false'); // custom colour active
     const prev = document.getElementById('wheel-preview');
     prev.style.background = 'rgb(' + currentRGB.r + ',' + currentRGB.g + ',' + currentRGB.b + ')';
+    setCurrentColor('rgb(' + currentRGB.r + ',' + currentRGB.g + ',' + currentRGB.b + ')');
   }
   function hsvToRgb(h, s, v) {
     const c = v * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = v - c;
@@ -226,6 +230,17 @@ const ColoringScreen = (function () {
     }
   }
 
+  function fillBurst(clientX, clientY) {
+    if (!stage) return;
+    const r = stage.getBoundingClientRect();
+    const b = document.createElement('span');
+    b.className = 'fill-burst';
+    b.style.left = (clientX - r.left) + 'px';
+    b.style.top = (clientY - r.top) + 'px';
+    stage.appendChild(b);
+    setTimeout(function () { b.remove(); }, 460);
+  }
+
   function fillAt(clientX, clientY) {
     const pt = clientToImage(clientX, clientY);
     if (!pt) return; // outside the picture — ignore (mis-tap guard)
@@ -240,7 +255,7 @@ const ColoringScreen = (function () {
         label: pageRegions && pageRegions.label,
         sizes: pageRegions && pageRegions.sizes,
       });
-      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); }
+      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); fillBurst(clientX, clientY); }
     } catch (err) {
       // Expected only if the canvas is tainted (file:// without inlined pages).
       console.warn('Coloring fill skipped: could not read canvas pixels. ' +

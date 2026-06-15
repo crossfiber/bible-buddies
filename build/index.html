@@ -69,54 +69,41 @@
     <!-- ===================== COLORING ===================== -->
     <section class="screen" data-screen="color" id="screen-color" hidden>
       <header class="bar">
-        <button class="nav-btn" data-nav="gallery" type="button" aria-label="Back to pictures">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="28,12 16,24 28,36" /></svg>
-        </button>
-        <div class="tools">
-          <button class="tool" id="btn-undo" type="button" aria-label="Undo">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 18 H30 a10 10 0 0 1 0 20 H18" /><polyline points="20,10 12,18 20,26" /></svg>
-          </button>
-          <button class="tool" id="btn-clear" type="button" aria-label="Start over">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18 H34 L32 38 a2 2 0 0 1-2 2 H18 a2 2 0 0 1-2-2 Z" /><path d="M20 18 V14 a2 2 0 0 1 2-2 H26 a2 2 0 0 1 2 2 V18" /><line x1="24" y1="23" x2="24" y2="35" /></svg>
-          </button>
+        <div class="bar-group">
+          <button class="iconbtn" data-nav="home" type="button" aria-label="Home"><img src="../assets/ui/icon-home.png" alt="" draggable="false" /></button>
+          <button class="iconbtn" data-nav="gallery" type="button" aria-label="Back to pictures"><img src="../assets/ui/icon-back.png" alt="" draggable="false" /></button>
+        </div>
+        <div class="bar-group">
+          <button class="iconbtn" id="btn-undo" type="button" aria-label="Undo"><img src="../assets/ui/icon-undo.png" alt="" draggable="false" /></button>
+          <button class="iconbtn" id="btn-clear" type="button" aria-label="Start over"><img src="../assets/ui/icon-erase.png" alt="" draggable="false" /></button>
         </div>
       </header>
       <section class="stage" id="stage">
         <canvas id="paper" aria-label="Coloring picture"></canvas>
         <div class="zoom-controls" aria-label="Zoom">
-          <button class="zoom-btn" id="btn-zoom-in" type="button" aria-label="Zoom in">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><line x1="24" y1="13" x2="24" y2="35"/><line x1="13" y1="24" x2="35" y2="24"/></svg>
-          </button>
-          <button class="zoom-btn" id="btn-zoom-out" type="button" aria-label="Zoom out">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><line x1="13" y1="24" x2="35" y2="24"/></svg>
-          </button>
+          <button class="zoom-btn" id="btn-zoom-in" type="button" aria-label="Zoom in"><img src="../assets/ui/icon-zoomin.png" alt="" draggable="false" /></button>
+          <button class="zoom-btn" id="btn-zoom-out" type="button" aria-label="Zoom out"><img src="../assets/ui/icon-zoomout.png" alt="" draggable="false" /></button>
         </div>
       </section>
       <footer class="tray" aria-label="Colors">
-        <div class="recent" id="recent" aria-label="Recent colors"></div>
+        <div class="tray-top">
+          <span class="current-color" id="current-color" aria-label="Coloring with"></span>
+          <div class="recent" id="recent" aria-label="Recent colors"></div>
+        </div>
         <div class="rack-wrap">
           <div class="rack" id="rack" aria-label="Crayons"></div>
-          <button class="wheel-btn" id="btn-wheel" type="button" aria-label="More colors">
-            <svg viewBox="0 0 48 48" aria-hidden="true">
-              <circle cx="24" cy="24" r="17"/>
-              <path d="M24 7 A17 17 0 0 1 41 24 L24 24 Z"/>
-              <path d="M41 24 A17 17 0 0 1 24 41 L24 24 Z"/>
-              <path d="M24 41 A17 17 0 0 1 7 24 L24 24 Z"/>
-              <circle cx="24" cy="24" r="5" fill="#fff"/>
-            </svg>
-          </button>
+          <button class="wheel-btn" id="btn-wheel" type="button" aria-label="More colors"><img src="../assets/ui/icon-palette.png" alt="" draggable="false" /></button>
         </div>
       </footer>
 
       <div class="wheel-overlay" id="wheel-overlay" hidden>
         <div class="wheel-card">
+          <p class="wheel-title">Pick a color</p>
           <canvas id="wheel-canvas" width="280" height="280" aria-label="Colour wheel"></canvas>
           <input id="wheel-bright" class="wheel-bright" type="range" min="5" max="100" value="100" aria-label="Brightness" />
           <div class="wheel-foot">
             <span class="wheel-preview" id="wheel-preview"></span>
-            <button class="wheel-done" id="btn-wheel-done" type="button" aria-label="Use this color">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="12,26 22,36 38,14"/></svg>
-            </button>
+            <button class="wheel-done" id="btn-wheel-done" type="button" aria-label="Use this color"><img src="../assets/ui/icon-check.png" alt="" draggable="false" /></button>
           </div>
         </div>
       </div>

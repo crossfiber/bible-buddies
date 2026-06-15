@@ -493,3 +493,49 @@ html, body {
 .confirm-yes { background: var(--red); }
 .confirm-no:active, .confirm-yes:active { transform: translateY(2px); }
 .confirm-no svg, .confirm-yes svg { width: 52%; height: 52%; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ===================== UI refresh: coloring toolbar / picker / wheel / pop ===================== */
+.screen[data-screen="color"] { position: relative; }
+.screen[data-screen="color"] .bar { background: transparent; border-bottom: none; }
+.bar-group { display: flex; gap: clamp(8px, 2vmin, 14px); }
+.iconbtn {
+  width: clamp(50px, 10.5vmin, 72px); height: clamp(50px, 10.5vmin, 72px);
+  padding: clamp(7px, 1.6vmin, 11px); background: #fff;
+  border: var(--outline) solid var(--ink); border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; touch-action: none;
+  filter: drop-shadow(3px 3px 0 var(--ink));
+}
+.iconbtn:active { transform: translateY(2px); }
+.iconbtn img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+.zoom-btn { padding: clamp(6px, 1.4vmin, 10px); }
+.zoom-btn img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+/* selected crayon: inner ring instead of an upward pop, so it never clips at the rack top */
+.crayon { position: relative; }
+.crayon[aria-pressed="true"] { transform: none; box-shadow: inset 0 0 0 5px #fff, inset 0 0 0 9px var(--ink); }
+.crayon:active { transform: translateY(-4px); }
+.rack { padding-top: clamp(8px, 1.6vmin, 12px); }
+
+/* "coloring with" chip — always visible, never clipped */
+.tray-top { display: flex; align-items: center; gap: clamp(8px, 2vmin, 14px); }
+.current-color {
+  flex: 0 0 auto; width: clamp(38px, 8.5vmin, 54px); height: clamp(38px, 8.5vmin, 54px);
+  border-radius: 14px; border: var(--outline) solid var(--ink); background: var(--red);
+  filter: drop-shadow(2px 2px 0 var(--ink));
+}
+
+/* color wheel: a clean centered popup card over a dimmed screen (not a block over the colors) */
+.wheel-overlay { z-index: 20; }
+.wheel-title { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(20px, 5vmin, 30px); color: var(--ink); }
+.wheel-btn { padding: clamp(8px, 1.8vmin, 12px); }
+.wheel-btn img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.wheel-done img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+/* a little pop where a region fills */
+.fill-burst {
+  position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px;
+  border-radius: 50%; border: 5px solid var(--ink); pointer-events: none; z-index: 4;
+  animation: fillburst .42s ease-out forwards;
+}
+@keyframes fillburst { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(2.4); opacity: 0; } }
