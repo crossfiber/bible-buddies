@@ -1,0 +1,39 @@
+/* Section picker + gallery title. Loaded after coloring.css. */
+.screen[data-screen="sections"] {
+  background: var(--sky) url('../../assets/branding/bg-1.jpeg') center / cover no-repeat;
+}
+.sections {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 4vw, 26px);
+  padding: clamp(18px, 5vw, 36px);
+  width: 100%; max-width: 540px; margin-inline: auto; box-sizing: border-box;
+  align-content: start;
+}
+.section-card {
+  aspect-ratio: 1 / 1; background: var(--sec, #888);
+  border: var(--outline) solid var(--ink); border-radius: var(--radius);
+  cursor: pointer; position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(2px, 0.8vmin, 8px); padding: clamp(6px, 1.6vmin, 12px);
+  touch-action: pan-y; filter: drop-shadow(4px 4px 0 var(--ink));
+}
+.section-card:active { transform: translateY(3px); }
+.section-card__art { width: 90%; aspect-ratio: 1 / 1; display: grid; place-items: center; }
+.section-card__art img {
+  width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;
+  filter: drop-shadow(2px 3px 0 rgba(22,22,22,.22));
+}
+.section-card__label {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(16px, 4.6vmin, 27px); color: #fff;
+  -webkit-text-stroke: 1.3px var(--ink); text-align: center; padding: 0 6px;
+}
+.section-card__soon {
+  position: absolute; top: clamp(6px, 1.6vmin, 12px); right: clamp(6px, 1.6vmin, 12px);
+  background: #fff; color: var(--ink); border: 3px solid var(--ink); border-radius: 999px;
+  font-weight: 600; font-size: clamp(11px, 2.6vmin, 15px); padding: 2px 10px; transform: rotate(6deg);
+}
+.section-card.wiggle { animation: wiggle 360ms ease-in-out; }
+.gallery-title { margin: 0; flex: 1 1 auto; text-align: center; font-family: var(--display); font-weight: 400; font-size: clamp(18px, 5vmin, 30px); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -1,0 +1,473 @@
+/* Little Lights — workbook aesthetic.
+   Flat bright fills, thick black outlines, rounded chunky shapes. No gradients, no blur, no
+   glass, no shadows (one allowed flat sticker-shadow), no emoji. See spec/ART-STYLE-BIBLE.md. */
+
+:root {
+  --ink: #161616;          /* soft black outline */
+  --paper: #FBF7EC;        /* cream paper */
+  --sky: #9FD3F0;          /* soft heavenly sky (matches the cloud background) */
+  --yellow: #FFD23F;
+  --red: #E8402C;
+  --green: #5BB749;
+  --muted: #DAD2C0;        /* flat muted tone for locked tiles */
+
+  --outline: 5px;          /* the one uniform outline weight, used everywhere */
+  --radius: 22px;          /* rounded chunky corners */
+
+  /* Self-hosted fonts (embedded in css/fonts.css; offline, no network calls). */
+  --font: 'Fredoka', 'Verdana', sans-serif;          /* friendly rounded UI text */
+  --display: 'Luckiest Guy', 'Fredoka', sans-serif;  /* chunky comic poster font for titles */
+}
+
+/* @font-face rules are embedded as data URIs in css/fonts.css so fonts load on file:// too. */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;                 /* the app never scrolls; only the gallery does */
+  font-family: var(--font);
+  font-weight: 500;
+  background: var(--sky);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;               /* kill pinch / double-tap zoom across the app */
+}
+
+.app { position: relative; height: 100%; }
+
+/* ---- screen router ---- */
+.screen { height: 100%; display: flex; flex-direction: column; }
+.screen[hidden] { display: none !important; }
+
+/* ===================== shared chunky buttons ===================== */
+.nav-btn, .tool {
+  width: clamp(54px, 11vmin, 82px);
+  height: clamp(54px, 11vmin, 82px);
+  padding: 0;
+  background: var(--yellow);
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+}
+.nav-btn:active, .tool:active { transform: translateY(2px); }
+.nav-btn svg, .tool svg {
+  width: 60%; height: 60%;
+  fill: none; stroke: var(--ink); stroke-width: 4;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+#btn-clear { background: var(--red); }
+
+/* ===================== HOME (in the clouds) ===================== */
+/* Heavenly cloud background: light pouring from above, clouds sloping up from the bottom. */
+.screen[data-screen="home"] {
+  background: var(--sky) url('../../assets/branding/bg-1.jpeg') center / cover no-repeat;
+}
+.home {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(8px, 2vmin, 18px);
+  padding: clamp(14px, 4vmin, 36px) clamp(16px, 4vmin, 40px) clamp(22px, 5vmin, 52px);
+  overflow: hidden;
+}
+
+/* ---- brand lockup (nudged down from the very top) ---- */
+.home-head {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(4px, 1.2vmin, 10px);
+  margin-top: clamp(14px, 5vmin, 48px);
+}
+.home-logo {
+  width: clamp(200px, 56vmin, 350px);
+  height: auto;
+  filter: drop-shadow(4px 4px 0 var(--ink)); /* the one allowed flat sticker-shadow */
+}
+.home-tag {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(14px, 3.4vmin, 22px);
+  color: var(--ink);
+}
+
+/* ---- the Color button: the cup sticker IS the button, vertically centered ---- */
+.home-buttons {
+  margin-top: clamp(20px, 6vmin, 56px); margin-bottom: auto;
+  display: flex;
+  justify-content: center;
+}
+.home-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: none;
+  animation: bob 2.8s ease-in-out infinite;   /* gentle float to invite the tap */
+}
+.home-btn:active { transform: translateY(3px) scale(.98); }
+.home-btn__face {
+  width: clamp(160px, 48vmin, 260px);
+  display: block;
+}
+.home-btn__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(3px 4px 0 var(--ink)); /* the one allowed flat sticker-shadow */
+}
+.home-btn__label {
+  margin-top: clamp(-16px, -3vmin, -10px);    /* the ribbon overlaps the cup base */
+  z-index: 2;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(22px, 6vmin, 38px);
+  color: #fff;
+  -webkit-text-stroke: 1.5px var(--ink);
+  background: var(--red);
+  border: var(--outline) solid var(--ink);
+  border-radius: 999px;
+  padding: clamp(3px, 0.8vmin, 7px) clamp(22px, 5.5vmin, 40px);
+  transform: rotate(-2deg);
+  filter: drop-shadow(3px 3px 0 var(--ink));
+}
+
+/* ---- grown-ups bottom button (leads to the parent gate) ---- */
+.grownups-btn {
+  position: relative; z-index: 1;
+  align-self: center;
+  margin-top: clamp(6px, 1.5vmin, 14px);
+  padding: clamp(8px, 1.6vmin, 12px) clamp(20px, 4.5vmin, 34px);
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: 999px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: clamp(14px, 3vmin, 20px);
+  color: var(--ink);
+  cursor: pointer;
+  touch-action: none;
+  opacity: .96;
+}
+.grownups-btn:active { transform: translateY(2px); }
+
+/* ---- animations (gentle; disabled when the user prefers reduced motion) ---- */
+.home-btn.wiggle { animation: wiggle 360ms ease-in-out; }
+@keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@media (prefers-reduced-motion: reduce) {
+  .home-btn { animation: none; }
+}
+
+/* ===================== top bar (gallery + color) ===================== */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(8px, 2vmin, 16px);
+  background: var(--sky);
+  border-bottom: var(--outline) solid var(--ink);
+}
+.bar-mascot {
+  height: clamp(48px, 10vmin, 84px);
+  width: auto;
+  pointer-events: none;
+}
+.tools { display: flex; gap: clamp(8px, 2vmin, 16px); }
+
+/* ===================== GALLERY ===================== */
+.screen[data-screen="gallery"] { background: var(--paper); }
+.gallery {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;              /* re-enable vertical scrolling inside the gallery only */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 38vw, 200px), 1fr));
+  gap: clamp(12px, 3vmin, 24px);
+  padding: clamp(12px, 3vmin, 28px);
+  align-content: start;
+}
+.card {
+  padding: clamp(6px, 1.5vmin, 12px);
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  cursor: pointer;
+  touch-action: pan-y;             /* let a scroll gesture started on a card still scroll */
+}
+.card:active { transform: translateY(2px); }
+.card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 10px;
+  pointer-events: none;
+}
+.gallery-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--ink);
+  font-size: clamp(18px, 5vmin, 28px);
+  padding: 12vmin 0;
+}
+
+/* ===================== COLORING ===================== */
+.screen[data-screen="color"] { background: var(--paper); }
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(8px, 2vmin, 18px);
+}
+
+/* Zoom buttons: two clean standalone circles docked at the right edge, clear of the colour row. */
+.zoom-controls {
+  position: absolute;
+  right: clamp(8px, 2vmin, 18px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2.4vmin, 16px);
+  z-index: 3;
+}
+.zoom-btn {
+  width: clamp(48px, 10vmin, 68px);
+  height: clamp(48px, 10vmin, 68px);
+  padding: 0;
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  filter: drop-shadow(3px 3px 0 var(--ink)); /* one allowed flat sticker-shadow */
+}
+.zoom-btn:active { transform: translateY(2px); }
+.zoom-btn svg { width: 56%; height: 56%; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+#paper {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  touch-action: none;
+}
+
+/* colour tray: a recent-colours strip on top, then the scrollable crayon rack + wheel */
+.tray {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(5px, 1.2vmin, 10px);
+  padding: clamp(6px, 1.5vmin, 12px) clamp(8px, 2vmin, 16px);
+}
+.recent {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1.4vmin, 12px);
+  min-height: clamp(28px, 6.5vmin, 44px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  scrollbar-width: none;
+}
+.recent::-webkit-scrollbar { display: none; }
+.swatch {
+  flex: 0 0 auto;
+  width: clamp(28px, 6.5vmin, 44px);
+  height: clamp(28px, 6.5vmin, 44px);
+  padding: 0;
+  background: var(--crayon, #fff);
+  border: clamp(2px, 0.7vmin, 3px) solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: pan-x;
+}
+.swatch:active { transform: scale(.9); }
+.rack-wrap {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vmin, 16px);
+}
+.rack {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: clamp(8px, 1.8vmin, 16px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;                 /* swipe the rack sideways; app stays put */
+  padding: clamp(12px, 2vmin, 18px) clamp(6px, 1.5vmin, 12px) clamp(4px, 1vmin, 8px);
+  scrollbar-width: none;
+}
+.rack::-webkit-scrollbar { display: none; }
+.crayon {
+  flex: 0 0 auto;
+  width: clamp(40px, 8vmin, 58px);
+  height: clamp(74px, 15vmin, 112px);
+  padding: 0;
+  background: var(--crayon, #fff);
+  border: var(--outline) solid var(--ink);
+  border-radius: 42% 42% 14px 14px / 30px 30px 14px 14px; /* domed crayon top */
+  cursor: pointer;
+  touch-action: pan-x;
+  transition: transform .08s ease;
+}
+.crayon[aria-pressed="true"] { transform: translateY(-12px) scale(1.05); }
+.crayon:active { transform: translateY(-6px); }
+
+.wheel-btn {
+  flex: 0 0 auto;
+  width: clamp(54px, 11vmin, 76px);
+  height: clamp(54px, 11vmin, 76px);
+  padding: 0;
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+}
+.wheel-btn:active { transform: translateY(2px); }
+.wheel-btn svg { width: 82%; height: 82%; }
+.wheel-btn circle, .wheel-btn path { stroke: var(--ink); stroke-width: 2; }
+.wheel-btn > circle:first-of-type { fill: var(--sky); }
+.wheel-btn path:nth-of-type(1) { fill: var(--red); }
+.wheel-btn path:nth-of-type(2) { fill: var(--yellow); }
+.wheel-btn path:nth-of-type(3) { fill: var(--green); }
+.wheel-btn circle[fill="#fff"] { fill: #fff; }
+
+/* colour-wheel overlay */
+.wheel-overlay {
+  position: absolute; inset: 0; z-index: 6;
+  display: grid; place-items: center;
+  background: rgba(22, 22, 22, .45);     /* plain dim scrim, no blur */
+}
+.wheel-overlay[hidden] { display: none; }
+.wheel-card {
+  background: var(--paper);
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  padding: clamp(14px, 3vmin, 26px);
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(10px, 2vmin, 18px);
+}
+#wheel-canvas {
+  width: min(68vw, 280px); height: auto;
+  border-radius: 50%;
+  border: var(--outline) solid var(--ink);
+  touch-action: none;
+}
+.wheel-bright { width: 90%; height: clamp(22px, 5vmin, 34px); accent-color: var(--ink); }
+.wheel-foot { display: flex; align-items: center; gap: clamp(14px, 4vmin, 28px); }
+.wheel-preview {
+  width: clamp(40px, 9vmin, 60px); height: clamp(40px, 9vmin, 60px);
+  border-radius: 50%; border: var(--outline) solid var(--ink); background: #fff;
+}
+.wheel-done {
+  width: clamp(54px, 11vmin, 76px); height: clamp(54px, 11vmin, 76px);
+  padding: 0; background: var(--green); border: var(--outline) solid var(--ink);
+  border-radius: 50%; cursor: pointer; display: grid; place-items: center; touch-action: none;
+}
+.wheel-done:active { transform: translateY(2px); }
+.wheel-done svg { width: 56%; height: 56%; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ===================== parent gate ===================== */
+.gate-overlay {
+  position: absolute; inset: 0; z-index: 20;
+  display: grid; place-items: center;
+  background: rgba(22, 22, 22, .5);   /* plain dim scrim, no blur */
+}
+.gate-overlay[hidden] { display: none; }
+.gate-card {
+  width: min(86vw, 460px);
+  background: var(--paper);
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  padding: clamp(20px, 5vmin, 40px);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(10px, 2.4vmin, 20px);
+}
+.gate-card[hidden] { display: none; }
+.gate-title { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(20px, 5.4vmin, 32px); color: var(--red); }
+.gate-hint, .gate-text { margin: 0; font-size: clamp(14px, 3.4vmin, 19px); color: var(--ink); line-height: 1.4; }
+.gate-muted { color: #8c8675; }
+.gate-hold {
+  width: clamp(90px, 22vmin, 130px); height: clamp(90px, 22vmin, 130px);
+  padding: 0; background: var(--yellow);
+  border: var(--outline) solid var(--ink); border-radius: 50%;
+  cursor: pointer; display: grid; place-items: center; touch-action: none;
+}
+.gate-hold svg { width: 64%; height: 64%; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.gate-hold .gate-ring {
+  stroke-dasharray: 126; stroke-dashoffset: 126; /* hidden until holding */
+  transition: none;
+}
+.gate-hold.is-holding { background: var(--green); }
+.gate-hold.is-holding .gate-ring {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.5s linear; /* fills over the hold duration */
+}
+.gate-cancel, .gate-done {
+  padding: clamp(8px, 1.8vmin, 12px) clamp(20px, 5vmin, 34px);
+  font-family: var(--font); font-weight: 600; font-size: clamp(15px, 3.4vmin, 21px); color: var(--ink);
+  background: #fff; border: var(--outline) solid var(--ink); border-radius: 999px;
+  cursor: pointer; touch-action: none;
+}
+.gate-done { background: var(--green); }
+.gate-cancel:active, .gate-done:active { transform: translateY(2px); }
+
+/* ===================== start-over confirmation ===================== */
+.confirm-overlay {
+  position: absolute; inset: 0; z-index: 18;
+  display: grid; place-items: center;
+  background: rgba(22, 22, 22, .5);   /* plain dim scrim, no blur */
+}
+.confirm-overlay[hidden] { display: none; }
+.confirm-card {
+  width: min(86vw, 420px);
+  background: var(--paper);
+  border: var(--outline) solid var(--ink);
+  border-radius: var(--radius);
+  padding: clamp(20px, 5vmin, 36px);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(10px, 2.4vmin, 18px);
+}
+.confirm-title { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(22px, 6vmin, 34px); color: var(--red); }
+.confirm-text { margin: 0; font-size: clamp(14px, 3.4vmin, 19px); color: var(--ink); }
+.confirm-actions { display: flex; gap: clamp(18px, 6vmin, 40px); }
+.confirm-no, .confirm-yes {
+  width: clamp(62px, 14vmin, 90px); height: clamp(62px, 14vmin, 90px);
+  padding: 0; border: var(--outline) solid var(--ink); border-radius: 50%;
+  cursor: pointer; display: grid; place-items: center; touch-action: none;
+}
+.confirm-no { background: #fff; }
+.confirm-yes { background: var(--red); }
+.confirm-no:active, .confirm-yes:active { transform: translateY(2px); }
+.confirm-no svg, .confirm-yes svg { width: 52%; height: 52%; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }

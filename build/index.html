@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- Lock the viewport: no user zoom/scroll so toddler mashing can't break the layout. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Little Lights</title>
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/coloring.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+</head>
+<body>
+  <!-- Single-page app: screens, one visible at a time. Wrap-friendly for app stores. -->
+  <main id="app" class="app">
+
+    <!-- ===================== HOME ===================== -->
+    <section class="screen" data-screen="home" id="screen-home">
+      <div class="home">
+        <div class="home-head">
+          <img class="home-logo" src="../assets/branding/logo.png" alt="Little Lights" draggable="false" />
+          <p class="home-tag" id="home-tag"></p>
+        </div>
+        <div class="home-buttons" id="home-buttons" aria-label="Activities"></div>
+        <button class="grownups-btn" id="grownups-btn" type="button">For Grown-Ups</button>
+      </div>
+    </section>
+
+    <!-- Parent gate + grown-ups panel (settings / privacy). Child-resistant hold-to-enter. -->
+    <div class="gate-overlay" id="gate-overlay" hidden>
+      <div class="gate-card" id="gate-step-hold">
+        <p class="gate-title">Grown-ups only</p>
+        <p class="gate-hint">Press and hold the button</p>
+        <button class="gate-hold" id="gate-hold" type="button" aria-label="Press and hold to enter">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle class="gate-ring" cx="24" cy="24" r="20"/><path d="M17 24 l5 5 l9 -11"/></svg>
+        </button>
+        <button class="gate-cancel" id="gate-cancel" type="button" aria-label="Back">Back</button>
+      </div>
+      <div class="gate-card" id="gate-step-panel" hidden>
+        <p class="gate-title">For Grown-Ups</p>
+        <p class="gate-text">Made for little ones: no personal information is collected, no
+          third-party tracking, no behavioral advertising, and no links out of the app without
+          a grown-up.</p>
+        <p class="gate-text gate-muted">Privacy policy &amp; settings — coming soon.</p>
+        <button class="gate-done" id="gate-panel-close" type="button">Done</button>
+      </div>
+    </div>
+
+    <!-- ===================== SECTIONS (picture categories) ===================== -->
+    <section class="screen" data-screen="sections" id="screen-sections" hidden>
+      <header class="bar">
+        <button class="nav-btn" data-nav="home" type="button" aria-label="Home">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24 L24 10 L40 24" /><path d="M13 22 V38 H35 V22" /></svg>
+        </button>
+      </header>
+      <div class="sections" id="sections-grid"></div>
+    </section>
+
+    <!-- ===================== GALLERY (pages in a section) ===================== -->
+    <section class="screen" data-screen="gallery" id="screen-gallery" hidden>
+      <header class="bar">
+        <button class="nav-btn" data-nav="sections" type="button" aria-label="Back to sections">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="28,12 16,24 28,36" /></svg>
+        </button>
+        <h2 class="gallery-title" id="gallery-title"></h2>
+      </header>
+      <div class="gallery" id="gallery-grid"></div>
+    </section>
+
+    <!-- ===================== COLORING ===================== -->
+    <section class="screen" data-screen="color" id="screen-color" hidden>
+      <header class="bar">
+        <button class="nav-btn" data-nav="gallery" type="button" aria-label="Back to pictures">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="28,12 16,24 28,36" /></svg>
+        </button>
+        <div class="tools">
+          <button class="tool" id="btn-undo" type="button" aria-label="Undo">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 18 H30 a10 10 0 0 1 0 20 H18" /><polyline points="20,10 12,18 20,26" /></svg>
+          </button>
+          <button class="tool" id="btn-clear" type="button" aria-label="Start over">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18 H34 L32 38 a2 2 0 0 1-2 2 H18 a2 2 0 0 1-2-2 Z" /><path d="M20 18 V14 a2 2 0 0 1 2-2 H26 a2 2 0 0 1 2 2 V18" /><line x1="24" y1="23" x2="24" y2="35" /></svg>
+          </button>
+        </div>
+      </header>
+      <section class="stage" id="stage">
+        <canvas id="paper" aria-label="Coloring picture"></canvas>
+        <div class="zoom-controls" aria-label="Zoom">
+          <button class="zoom-btn" id="btn-zoom-in" type="button" aria-label="Zoom in">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><line x1="24" y1="13" x2="24" y2="35"/><line x1="13" y1="24" x2="35" y2="24"/></svg>
+          </button>
+          <button class="zoom-btn" id="btn-zoom-out" type="button" aria-label="Zoom out">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><line x1="13" y1="24" x2="35" y2="24"/></svg>
+          </button>
+        </div>
+      </section>
+      <footer class="tray" aria-label="Colors">
+        <div class="recent" id="recent" aria-label="Recent colors"></div>
+        <div class="rack-wrap">
+          <div class="rack" id="rack" aria-label="Crayons"></div>
+          <button class="wheel-btn" id="btn-wheel" type="button" aria-label="More colors">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="17"/>
+              <path d="M24 7 A17 17 0 0 1 41 24 L24 24 Z"/>
+              <path d="M41 24 A17 17 0 0 1 24 41 L24 24 Z"/>
+              <path d="M24 41 A17 17 0 0 1 7 24 L24 24 Z"/>
+              <circle cx="24" cy="24" r="5" fill="#fff"/>
+            </svg>
+          </button>
+        </div>
+      </footer>
+
+      <!-- Colour wheel: tap-anywhere hue/saturation picker + brightness, for older users. -->
+      <div class="wheel-overlay" id="wheel-overlay" hidden>
+        <div class="wheel-card">
+          <canvas id="wheel-canvas" width="280" height="280" aria-label="Colour wheel"></canvas>
+          <input id="wheel-bright" class="wheel-bright" type="range" min="5" max="100" value="100" aria-label="Brightness" />
+          <div class="wheel-foot">
+            <span class="wheel-preview" id="wheel-preview"></span>
+            <button class="wheel-done" id="btn-wheel-done" type="button" aria-label="Use this color">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="12,26 22,36 38,14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start-over confirmation (so the trash button can't wipe work by accident). -->
+      <div class="confirm-overlay" id="confirm-overlay" hidden>
+        <div class="confirm-card">
+          <p class="confirm-title">Start over?</p>
+          <p class="confirm-text">This erases your colors.</p>
+          <div class="confirm-actions">
+            <button class="confirm-no" id="confirm-no" type="button" aria-label="No, keep coloring">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><line x1="14" y1="14" x2="34" y2="34"/><line x1="34" y1="14" x2="14" y2="34"/></svg>
+            </button>
+            <button class="confirm-yes" id="confirm-yes" type="button" aria-label="Yes, start over">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="12,26 22,36 38,14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- data + engine -->
+  <script src="js/config.js"></script>
+  <script src="js/manifest.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/floodfill.js"></script>
+  <!-- screens -->
+  <script src="js/screens.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/sections.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/coloring.js"></script>
+  <!-- boot -->
+  <script src="js/app.js"></script>
+</body>
+</html>
