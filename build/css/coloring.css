@@ -188,7 +188,9 @@ html, body {
 .tools { display: flex; gap: clamp(8px, 2vmin, 16px); }
 
 /* ===================== GALLERY ===================== */
-.screen[data-screen="gallery"] { background: var(--paper); }
+.screen[data-screen="gallery"] {
+  background: var(--sky) url('../../assets/branding/bg-1.jpeg') center / cover no-repeat;
+}
 .gallery {
   flex: 1 1 auto;
   min-height: 0;
@@ -202,23 +204,43 @@ html, body {
   align-content: start;
 }
 .card {
-  padding: clamp(6px, 1.5vmin, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(5px, 1.4vmin, 10px);
+  padding: clamp(7px, 1.7vmin, 12px);
   background: #fff;
   border: var(--outline) solid var(--ink);
   border-radius: var(--radius);
   cursor: pointer;
   touch-action: pan-y;             /* let a scroll gesture started on a card still scroll */
+  filter: drop-shadow(4px 4px 0 var(--ink));   /* flat sticker shadow, matches home + sections */
 }
 .card:active { transform: translateY(2px); }
+.card__frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
 .card__img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: contain;
   background: #fff;
-  border-radius: 10px;
   pointer-events: none;
+}
+.card__label {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(13px, 3.3vmin, 19px);
+  line-height: 1.04;
+  letter-spacing: .3px;
+  color: var(--ink);
+  text-align: center;
+  padding: 0 2px 2px;
 }
 .gallery-empty {
   grid-column: 1 / -1;

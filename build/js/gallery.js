@@ -31,13 +31,21 @@ const GalleryScreen = (function () {
       card.className = 'card';
       card.setAttribute('aria-label', page.title);
 
+      const frame = document.createElement('span');
+      frame.className = 'card__frame';
       const img = document.createElement('img');
       img.className = 'card__img';
       img.alt = '';
       img.draggable = false;
       const src = base + page.thumb;
       if (observer) { img.dataset.src = src; } else { img.src = src; }
-      card.appendChild(img);
+      frame.appendChild(img);
+      card.appendChild(frame);
+
+      const label = document.createElement('span');
+      label.className = 'card__label';
+      label.textContent = page.title;
+      card.appendChild(label);
 
       // Open ONLY on a real tap — a finger that moves is a scroll, not an open.
       let downX = 0, downY = 0, tap = false;
