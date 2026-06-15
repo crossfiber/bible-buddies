@@ -239,7 +239,7 @@ const ColoringScreen = (function () {
         outlineLuma: cfg.outlineLuma,
         mask: outlineMask,
         label: pageRegions && pageRegions.label,
-        group: pageRegions && pageRegions.group,
+        slivNeighbors: pageRegions && pageRegions.slivNeighbors,
       });
       if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); }
     } catch (err) {
