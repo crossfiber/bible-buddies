@@ -23,7 +23,7 @@ const ColoringConfig = {
   sections: [
     { id: 'bible-stories', title: 'Bible Stories', art: 'icon-bible.png',   color: '#E8402C' },
     { id: 'animals',       title: 'Animals',       art: 'icon-animals.png', color: '#5BB749' },
-    { id: 'planets',       title: 'Planets',       art: 'icon-planets.png', color: '#8E5BC4' },
+    { id: 'space',         title: 'Space',         art: 'icon-space.png',   color: '#8E5BC4' },
     { id: 'weather',       title: 'Weather',       art: 'icon-weather.png', color: '#3DA7DC' },
   ],
 
