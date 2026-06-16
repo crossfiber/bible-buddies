@@ -19,5 +19,15 @@ window.ColoringManifest = [
   { id: "color-page_bear_01", title: "Bear", section: "animals", file: "color-page_bear_01.png", thumb: "thumbs/color-page_bear_01.png" },
   { id: "color-page_bunny_01", title: "Bunny", section: "animals", file: "color-page_bunny_01.png", thumb: "thumbs/color-page_bunny_01.png" },
   { id: "color-page_cow_01", title: "Cow", section: "animals", file: "color-page_cow_01.png", thumb: "thumbs/color-page_cow_01.png" },
-  { id: "color-page_pig_01", title: "Pig", section: "animals", file: "color-page_pig_01.png", thumb: "thumbs/color-page_pig_01.png" }
+  { id: "color-page_pig_01", title: "Pig", section: "animals", file: "color-page_pig_01.png", thumb: "thumbs/color-page_pig_01.png" },
+  { id: "color-page_sun_01", title: "Sun", section: "space", file: "color-page_sun_01.png", thumb: "thumbs/color-page_sun_01.png" },
+  { id: "color-page_moon_01", title: "Moon", section: "space", file: "color-page_moon_01.png", thumb: "thumbs/color-page_moon_01.png" },
+  { id: "color-page_star_01", title: "Star", section: "space", file: "color-page_star_01.png", thumb: "thumbs/color-page_star_01.png" },
+  { id: "color-page_earth_01", title: "Earth", section: "space", file: "color-page_earth_01.png", thumb: "thumbs/color-page_earth_01.png" },
+  { id: "color-page_saturn_01", title: "Saturn", section: "space", file: "color-page_saturn_01.png", thumb: "thumbs/color-page_saturn_01.png" },
+  { id: "color-page_rocket_01", title: "Rocket", section: "space", file: "color-page_rocket_01.png", thumb: "thumbs/color-page_rocket_01.png" },
+  { id: "color-page_astronaut_01", title: "Astronaut", section: "space", file: "color-page_astronaut_01.png", thumb: "thumbs/color-page_astronaut_01.png" },
+  { id: "color-page_comet_01", title: "Comet", section: "space", file: "color-page_comet_01.png", thumb: "thumbs/color-page_comet_01.png" },
+  { id: "color-page_star-cluster_01", title: "Star Cluster", section: "space", file: "color-page_star-cluster_01.png", thumb: "thumbs/color-page_star-cluster_01.png" },
+  { id: "color-page_telescope_01", title: "Telescope", section: "space", file: "color-page_telescope_01.png", thumb: "thumbs/color-page_telescope_01.png" }
 ];
