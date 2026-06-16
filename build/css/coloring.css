@@ -660,3 +660,16 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 #paper { max-width: 100%; max-height: 100%; width: auto; height: auto; }
 /* modals stay as real fixed pop-ups regardless of screen positioning */
 .wheel-overlay, .confirm-overlay { position: fixed; inset: 0; z-index: 40; }
+
+/* ===================== gallery header: a defined top bar (cards scroll cleanly beneath it) ===================== */
+/* Was fully transparent, so the grid blended into the cloud backdrop with no separation as it scrolled.
+   Give it the same white workbook bar as the coloring screen: solid fill, bold ink divider, soft shadow
+   that the scrolling cards pass under. */
+.screen[data-screen="gallery"] .bar {
+  background: #fff;
+  border-bottom: var(--outline) solid var(--ink);
+  box-shadow: 0 6px 14px rgba(22, 22, 22, 0.16);
+  position: relative;
+  z-index: 5;                 /* keep the bar + its shadow above the scrolling grid */
+}
+.gallery-title { text-shadow: none; }   /* dark title reads fine on the white bar now */
