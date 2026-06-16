@@ -573,3 +573,19 @@ html, body {
 /* the "more colours" wheel lives in its own compartment, divided from the crayons */
 .rack-div { flex: 0 0 auto; align-self: stretch; width: 3px; margin: clamp(5px,1.3vmin,9px) clamp(2px,1vw,6px); background: var(--ink); border-radius: 2px; }
 .wheel-slot { flex: 0 0 auto; display: grid; place-items: center; }
+
+/* ===================== layout hardening: pin to viewport, safe areas, defined header ===================== */
+/* Pin the whole app to the exact visible viewport so it can never overflow/scroll or sit narrow. */
+html, body { width: 100%; height: 100%; height: 100dvh; }
+.app { position: fixed; inset: 0; }
+
+/* The coloring screen now reads as: white header  ·  cream canvas  ·  white palette panel. */
+.screen[data-screen="color"] .bar {
+  background: #fff;
+  border-bottom: var(--outline) solid var(--ink);
+  padding-top: max(clamp(8px, 2vmin, 16px), env(safe-area-inset-top));
+}
+.screen[data-screen="gallery"] .bar {
+  padding-top: max(clamp(8px, 2vmin, 16px), env(safe-area-inset-top));
+}
+.tray { padding-bottom: max(clamp(10px, 2.4vmin, 16px), env(safe-area-inset-bottom)); }
