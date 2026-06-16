@@ -29,5 +29,15 @@ window.ColoringManifest = [
   { id: "color-page_astronaut_01", title: "Astronaut", section: "space", file: "color-page_astronaut_01.png", thumb: "thumbs/color-page_astronaut_01.png" },
   { id: "color-page_comet_01", title: "Comet", section: "space", file: "color-page_comet_01.png", thumb: "thumbs/color-page_comet_01.png" },
   { id: "color-page_star-cluster_01", title: "Star Cluster", section: "space", file: "color-page_star-cluster_01.png", thumb: "thumbs/color-page_star-cluster_01.png" },
-  { id: "color-page_telescope_01", title: "Telescope", section: "space", file: "color-page_telescope_01.png", thumb: "thumbs/color-page_telescope_01.png" }
+  { id: "color-page_telescope_01", title: "Telescope", section: "space", file: "color-page_telescope_01.png", thumb: "thumbs/color-page_telescope_01.png" },
+  { id: "color-page_sunny-day_01", title: "Sunny Day", section: "weather", file: "color-page_sunny-day_01.png", thumb: "thumbs/color-page_sunny-day_01.png" },
+  { id: "color-page_cloud_01", title: "Cloud", section: "weather", file: "color-page_cloud_01.png", thumb: "thumbs/color-page_cloud_01.png" },
+  { id: "color-page_rainbow_01", title: "Rainbow", section: "weather", file: "color-page_rainbow_01.png", thumb: "thumbs/color-page_rainbow_01.png" },
+  { id: "color-page_rain-cloud_01", title: "Rain Cloud", section: "weather", file: "color-page_rain-cloud_01.png", thumb: "thumbs/color-page_rain-cloud_01.png" },
+  { id: "color-page_umbrella_01", title: "Umbrella", section: "weather", file: "color-page_umbrella_01.png", thumb: "thumbs/color-page_umbrella_01.png" },
+  { id: "color-page_snowflake_01", title: "Snowflake", section: "weather", file: "color-page_snowflake_01.png", thumb: "thumbs/color-page_snowflake_01.png" },
+  { id: "color-page_snowman_01", title: "Snowman", section: "weather", file: "color-page_snowman_01.png", thumb: "thumbs/color-page_snowman_01.png" },
+  { id: "color-page_lightning_01", title: "Lightning", section: "weather", file: "color-page_lightning_01.png", thumb: "thumbs/color-page_lightning_01.png" },
+  { id: "color-page_kite_01", title: "Kite", section: "weather", file: "color-page_kite_01.png", thumb: "thumbs/color-page_kite_01.png" },
+  { id: "color-page_rain-boots_01", title: "Rain Boots", section: "weather", file: "color-page_rain-boots_01.png", thumb: "thumbs/color-page_rain-boots_01.png" }
 ];
