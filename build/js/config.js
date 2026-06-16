@@ -15,6 +15,7 @@ const ColoringConfig = {
   // Home screen activities. Color opens the section picker (sections below).
   activities: [
     { id: 'color', label: 'Color', tile: 'cup.png', screen: 'sections', enabled: true },
+    { id: 'saved', label: 'My Pictures', tile: 'tile-saved.png', screen: 'saved', enabled: true },
   ],
 
   // Picture sections. A page belongs to a section via its `section` field in the manifest

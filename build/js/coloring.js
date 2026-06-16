@@ -50,6 +50,11 @@ const ColoringScreen = (function () {
     bindTap('btn-zoom-in', () => zoomBy(1.6));
     bindTap('btn-zoom-out', () => zoomBy(1 / 1.6));
     bindTap('btn-wheel', openWheel);
+    bindTap('btn-save', openSaveModal);
+    bindTap('btn-save-close', closeSaveModal);
+    bindTap('btn-save-gallery', () => { closeSaveModal(); saveToGallery(); });
+    bindTap('btn-save-photos', () => { closeSaveModal(); saveToPhotos(); });
+    bindTap('btn-save-device', () => { closeSaveModal(); saveToDevice(); });
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointermove', onPointerMove);
     canvas.addEventListener('pointerup', onPointerUp);
@@ -133,10 +138,62 @@ const ColoringScreen = (function () {
     });
     bindTap('btn-wheel-done', closeWheel);
   }
-  function openWheel() { document.getElementById('wheel-overlay').hidden = false; }
+  function openWheel() {
+    const prev = document.getElementById('wheel-preview');
+    if (prev) prev.style.background = 'rgb(' + currentRGB.r + ',' + currentRGB.g + ',' + currentRGB.b + ')';
+    document.getElementById('wheel-overlay').hidden = false;
+  }
   function closeWheel() {
     addRecent(rgbToHex(currentRGB)); // remember the colour the wheel landed on
     document.getElementById('wheel-overlay').hidden = true;
+  }
+
+  // --- saving the finished picture (on-device gallery / photos / download) ---
+  function openSaveModal() { const o = document.getElementById('save-overlay'); if (o) o.hidden = false; }
+  function closeSaveModal() { const o = document.getElementById('save-overlay'); if (o) o.hidden = true; }
+
+  // Flatten the canvas to a PNG blob plus a small thumbnail blob.
+  function snapshot(cb) {
+    canvas.toBlob((full) => {
+      const max = 480, scale = Math.min(1, max / Math.max(canvas.width, canvas.height));
+      const tw = Math.round(canvas.width * scale), th = Math.round(canvas.height * scale);
+      const oc = document.createElement('canvas'); oc.width = tw; oc.height = th;
+      oc.getContext('2d').drawImage(canvas, 0, 0, tw, th);
+      oc.toBlob((thumb) => cb(full, thumb), 'image/png');
+    }, 'image/png');
+  }
+  function fileName() { return (currentPage && currentPage.id ? currentPage.id : 'little-lights') + '.png'; }
+
+  function saveToGallery() {
+    snapshot((full, thumb) => {
+      const id = String(Date.now()) + '-' + Math.random().toString(36).slice(2, 7);
+      Gallery.add({ id: id, title: currentPage ? currentPage.title : 'My Picture', ts: Date.now(), full: full, thumb: thumb })
+        .then(() => { Gallery.persist(); flashSaved(); })
+        .catch(() => {});
+    });
+  }
+  function saveToDevice() {
+    canvas.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = fileName();
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }, 'image/png');
+  }
+  function saveToPhotos() {
+    canvas.toBlob((blob) => {
+      const file = new File([blob], fileName(), { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file] }).catch(() => {});   // share sheet -> Save Image to Photos
+      } else {
+        saveToDevice();                                        // desktop / unsupported -> download
+      }
+    }, 'image/png');
+  }
+  function flashSaved() {
+    const t = document.getElementById('save-toast'); if (!t) return;
+    t.hidden = false; t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+    setTimeout(() => { t.classList.remove('show'); t.hidden = true; }, 1400);
   }
 
   function drawWheel(wc, val) {

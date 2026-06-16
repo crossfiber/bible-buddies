@@ -70,6 +70,24 @@
       <div class="gallery" id="gallery-grid"></div>
     </section>
 
+    <!-- ===================== MY PICTURES (saved) ===================== -->
+    <section class="screen" data-screen="saved" id="screen-saved" hidden>
+      <header class="bar">
+        <button class="iconbtn" data-nav="home" type="button" aria-label="Home"><img src="../assets/ui/icon-home.png" alt="" draggable="false" /></button>
+        <h2 class="gallery-title">My Pictures</h2>
+        <button class="bar-logo" data-nav="home" type="button" aria-label="Home"><img src="../assets/branding/mascot.png" alt="" draggable="false" /></button>
+      </header>
+      <div class="gallery" id="saved-grid"></div>
+
+      <div class="viewer-overlay" id="viewer-overlay" hidden>
+        <img class="viewer-img" id="viewer-img" alt="Saved picture" draggable="false" />
+        <div class="viewer-bar">
+          <button class="viewer-btn viewer-btn--del" id="viewer-delete" type="button" aria-label="Hold to delete"><span class="hold-fill"></span><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18 H34 L32 38 a2 2 0 0 1-2 2 H18 a2 2 0 0 1-2-2 Z"/><path d="M20 18 V14 a2 2 0 0 1 2-2 H26 a2 2 0 0 1 2 2 V18"/><line x1="24" y1="23" x2="24" y2="35"/></svg></button>
+          <button class="viewer-btn" id="viewer-close" type="button" aria-label="Close"><svg viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="15" x2="33" y2="33"/><line x1="33" y1="15" x2="15" y2="33"/></svg></button>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== COLORING ===================== -->
     <section class="screen" data-screen="color" id="screen-color" hidden>
       <header class="bar">
@@ -77,6 +95,7 @@
           <button class="iconbtn" data-nav="gallery" type="button" aria-label="Back to pictures"><img src="../assets/ui/icon-back.png" alt="" draggable="false" /></button>
         </div>
         <div class="bar-group">
+          <button class="iconbtn iconbtn--save" id="btn-save" type="button" aria-label="Save my picture"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41 C7 29 9 15 19 15 C23 15 24 18 24 20 C24 18 25 15 29 15 C39 15 41 29 24 41 Z"/></svg></button>
           <button class="iconbtn" id="btn-undo" type="button" aria-label="Undo"><img src="../assets/ui/icon-undo.png" alt="" draggable="false" /></button>
           <button class="iconbtn" id="btn-clear" type="button" aria-label="Start over"><img src="../assets/ui/icon-erase.png" alt="" draggable="false" /></button>
         </div>
@@ -105,8 +124,10 @@
           <canvas id="wheel-canvas" width="280" height="280" aria-label="Colour wheel"></canvas>
           <input id="wheel-bright" class="wheel-bright" type="range" min="5" max="100" value="100" aria-label="Brightness" />
           <div class="wheel-foot">
-            <span class="wheel-preview" id="wheel-preview"></span>
-            <button class="wheel-done" id="btn-wheel-done" type="button" aria-label="Use this color"><img src="../assets/ui/icon-check.png" alt="" draggable="false" /></button>
+            <button class="wheel-use" id="btn-wheel-done" type="button" aria-label="Use this color">
+              <span class="wheel-use__swatch" id="wheel-preview"></span>
+              <svg class="wheel-use__check" viewBox="0 0 48 48" aria-hidden="true"><polyline points="12,26 22,36 38,14" /></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -125,6 +146,29 @@
           </div>
         </div>
       </div>
+      <div class="save-overlay" id="save-overlay" hidden>
+        <div class="save-card">
+          <p class="save-title">Save your picture</p>
+          <div class="save-options">
+            <button class="save-opt save-opt--gallery" id="btn-save-gallery" type="button">
+              <span class="save-opt__icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="11" width="30" height="26" rx="3"/><circle cx="18" cy="20" r="2.5"/><path d="M11 33 L21 23 L29 31 L34 26 L37 29"/></svg></span>
+              <span class="save-opt__label">Save to Gallery</span>
+            </button>
+            <button class="save-opt save-opt--photos" id="btn-save-photos" type="button">
+              <span class="save-opt__icon"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="14" width="25" height="21" rx="3"/><path d="M33 18 H40 V40 H17 V35"/><circle cx="16" cy="22" r="2.5"/><path d="M10 31 L18 23 L24 29"/></svg></span>
+              <span class="save-opt__label">Save to Photos</span>
+            </button>
+            <button class="save-opt save-opt--device" id="btn-save-device" type="button">
+              <span class="save-opt__icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 9 V28"/><path d="M16 22 L24 30 L32 22"/><path d="M11 37 H37"/></svg></span>
+              <span class="save-opt__label">Save to Device</span>
+            </button>
+          </div>
+          <button class="save-cancel" id="btn-save-close" type="button" aria-label="Close"><svg viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="15" x2="33" y2="33"/><line x1="33" y1="15" x2="15" y2="33"/></svg></button>
+        </div>
+      </div>
+
+      <div class="toast" id="save-toast" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="12,26 22,36 38,14"/></svg>Saved!</div>
+
     </section>
 
   </main>
@@ -132,11 +176,13 @@
   <script src="js/config.js"></script>
   <script src="js/manifest.js"></script>
   <script src="js/pages.js"></script>
+  <script src="js/storage.js"></script>
   <script src="js/floodfill.js"></script>
   <script src="js/screens.js"></script>
   <script src="js/home.js"></script>
   <script src="js/sections.js"></script>
   <script src="js/gallery.js"></script>
+  <script src="js/saved.js"></script>
   <script src="js/coloring.js"></script>
   <script src="js/app.js"></script>
   <script>

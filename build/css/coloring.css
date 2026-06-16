@@ -673,3 +673,69 @@ html, body { height: 100%; }                                   /* drop 100dvh */
   z-index: 5;                 /* keep the bar + its shadow above the scrolling grid */
 }
 .gallery-title { text-shadow: none; }   /* dark title reads fine on the white bar now */
+
+/* ===================== color wheel: one coherent "use this colour" control ===================== */
+/* Replaces the oversized check + purposeless white circle with a single pill that shows the
+   picked colour (swatch) and confirms it (check). */
+.wheel-foot { display: flex; justify-content: center; width: 100%; gap: 0; }
+.wheel-use { display: inline-flex; align-items: center; gap: clamp(8px, 2.2vmin, 14px);
+  padding: clamp(8px, 1.8vmin, 12px) clamp(18px, 4.5vmin, 28px);
+  background: #fff; border: var(--outline) solid var(--ink); border-radius: 999px;
+  cursor: pointer; touch-action: none; filter: drop-shadow(3px 3px 0 var(--ink)); }
+.wheel-use:active { transform: translateY(2px); }
+.wheel-use__swatch { width: clamp(30px, 7vmin, 42px); height: clamp(30px, 7vmin, 42px);
+  border-radius: 50%; border: 4px solid var(--ink); background: var(--red); flex: 0 0 auto; }
+.wheel-use__check { width: clamp(26px, 6vmin, 36px); height: clamp(26px, 6vmin, 36px);
+  fill: none; stroke: var(--green); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ===================== toolbar save (heart) button ===================== */
+.iconbtn svg { width: 100%; height: 100%; }
+.iconbtn--save { background: var(--red); }
+.iconbtn--save svg { fill: #fff; stroke: var(--ink); stroke-width: 2.5; }
+
+/* ===================== save modal (Gallery / Photos / Device) ===================== */
+.save-overlay { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; background: rgba(22,22,22,.45); }
+.save-overlay[hidden] { display: none; }
+.save-card { background: var(--paper); border: var(--outline) solid var(--ink); border-radius: var(--radius);
+  padding: clamp(16px,4vmin,28px); width: min(86vw, 420px); display: flex; flex-direction: column; align-items: center; gap: clamp(12px,2.6vmin,18px); }
+.save-title { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(20px,5.4vmin,30px); color: var(--ink); }
+.save-options { display: flex; flex-direction: column; gap: clamp(10px,2.2vmin,16px); width: 100%; }
+.save-opt { display: flex; align-items: center; gap: clamp(12px,3vmin,18px);
+  padding: clamp(10px,2.4vmin,16px) clamp(14px,3.4vmin,20px);
+  background: #fff; border: var(--outline) solid var(--ink); border-radius: clamp(16px,4vw,22px);
+  cursor: pointer; touch-action: none; width: 100%; }
+.save-opt:active { transform: translateY(2px); }
+.save-opt__icon { flex: 0 0 auto; width: clamp(40px,9vmin,54px); height: clamp(40px,9vmin,54px);
+  border-radius: 14px; display: grid; place-items: center; border: 3px solid var(--ink); }
+.save-opt__icon svg { width: 64%; height: 64%; fill: none; stroke: var(--ink); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+.save-opt--gallery .save-opt__icon { background: var(--yellow); }
+.save-opt--photos  .save-opt__icon { background: var(--sky); }
+.save-opt--device  .save-opt__icon { background: var(--green); }
+.save-opt__label { font-family: var(--display); font-weight: 400; font-size: clamp(17px,4.4vmin,24px); color: var(--ink); }
+.save-cancel { width: clamp(46px,10vmin,60px); height: clamp(46px,10vmin,60px); padding: 0;
+  background: #fff; border: var(--outline) solid var(--ink); border-radius: 50%; cursor: pointer; display: grid; place-items: center; touch-action: none; }
+.save-cancel svg { width: 50%; height: 50%; fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+
+/* ===================== saved-picture viewer + "saved!" toast ===================== */
+.screen[data-screen="saved"] { background: var(--sky) url('../../assets/branding/bg-1.jpeg') center / cover no-repeat; }
+.screen[data-screen="saved"] .bar { background: #fff; border-bottom: var(--outline) solid var(--ink);
+  box-shadow: 0 6px 14px rgba(22,22,22,.16); position: relative; z-index: 5;
+  padding-top: max(clamp(8px,2vmin,16px), env(safe-area-inset-top)); }
+.viewer-overlay { position: fixed; inset: 0; z-index: 46; display: grid; place-items: center; background: rgba(22,22,22,.7); padding: clamp(16px,5vw,40px); }
+.viewer-overlay[hidden] { display: none; }
+.viewer-img { max-width: 100%; max-height: 82%; border: var(--outline) solid var(--ink); border-radius: var(--radius); background: #fff; }
+.viewer-bar { position: absolute; top: max(12px, env(safe-area-inset-top)); right: 16px; display: flex; gap: 12px; }
+.viewer-btn { width: clamp(46px,11vmin,62px); height: clamp(46px,11vmin,62px); padding: 0; background: #fff;
+  border: var(--outline) solid var(--ink); border-radius: 50%; cursor: pointer; display: grid; place-items: center; touch-action: none; position: relative; overflow: hidden; }
+.viewer-btn svg { width: 50%; height: 50%; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; position: relative; z-index: 1; }
+.viewer-btn--del svg { stroke: var(--red); }
+.viewer-btn--del .hold-fill { position: absolute; inset: 0; background: rgba(232,64,44,.4); transform: scaleY(0); transform-origin: bottom; z-index: 0; }
+.viewer-btn--del.is-holding .hold-fill { transform: scaleY(1); transition: transform 1.2s linear; }
+.toast { position: fixed; left: 50%; bottom: 14%; transform: translateX(-50%) scale(.8); z-index: 50;
+  display: flex; align-items: center; gap: 10px; background: var(--green); color: #fff;
+  border: var(--outline) solid var(--ink); border-radius: 999px; padding: 10px 22px;
+  font-family: var(--display); font-size: clamp(16px,4.4vmin,22px); opacity: 0; pointer-events: none; }
+.toast[hidden] { display: none; }
+.toast.show { animation: toast-pop 1.3s ease forwards; }
+.toast svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes toast-pop { 0%{opacity:0; transform:translateX(-50%) scale(.8)} 15%{opacity:1; transform:translateX(-50%) scale(1)} 80%{opacity:1} 100%{opacity:0; transform:translateX(-50%) scale(1)} }

@@ -7,6 +7,7 @@
     HomeScreen.register();
     SectionsScreen.register();
     GalleryScreen.register();
+    SavedScreen.register();
     ColoringScreen.register();
     Screens.wireNavButtons();
     Screens.show('home');
