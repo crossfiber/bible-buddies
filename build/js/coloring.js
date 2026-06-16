@@ -81,9 +81,18 @@ const ColoringScreen = (function () {
     for (const el of rack.children) el.setAttribute('aria-pressed', el.dataset.hex === hex ? 'true' : 'false');
     setCurrentColor(hex);
   }
-  function setCurrentColor(css) { const c = document.getElementById('current-color'); if (c) c.style.background = css; }
+  function setCurrentColor(css) {
+    const c = document.getElementById('current-color');
+    if (!c) return;
+    c.style.background = css;
+    c.classList.remove('pick'); void c.offsetWidth; c.classList.add('pick');   // retrigger the bounce
+  }
   // Pick a NEW colour (crayon or wheel): apply it and remember it at the front of recents.
-  function pickColour(hex) { applyColour(hex); addRecent(hex); }
+  function pickColour(hex) {
+    applyColour(hex); addRecent(hex);
+    const el = [...rack.children].find((c) => c.dataset.hex === hex.toUpperCase());
+    if (el) { el.classList.remove('justpicked'); void el.offsetWidth; el.classList.add('justpicked'); }
+  }
   function addRecent(hex) {
     hex = hex.toUpperCase();
     recentColors = recentColors.filter((c) => c !== hex);

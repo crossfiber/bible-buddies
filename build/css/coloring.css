@@ -602,3 +602,34 @@ html, body { width: 100%; height: 100%; height: 100dvh; }
   z-index: 5;
 }
 .zoom-dock .iconbtn { width: clamp(48px, 10vmin, 66px); height: clamp(48px, 10vmin, 66px); padding: clamp(6px, 1.5vmin, 10px); filter: drop-shadow(3px 3px 0 var(--ink)); }
+
+/* ===================== AUTHORITATIVE: solid layout chain + clean bottom palette ===================== */
+/* Pin app to the viewport and give every screen a DEFINITE size (absolute inset) so the inner
+   flex column (header / stage flex:1 / palette) resolves on every browser — fixes the picture
+   floating at the top with dead space below. */
+.app { position: fixed; inset: 0; }
+.screen { position: absolute; inset: 0; height: auto; }
+
+/* bottom palette: a clean white panel holding colours + recent + wheel + zoom */
+.tray {
+  display: flex; flex-direction: column;
+  gap: clamp(8px, 1.8vmin, 14px);
+  background: #fff;
+  border-top: var(--outline) solid var(--ink);
+  border-radius: clamp(20px, 6vw, 34px) clamp(20px, 6vw, 34px) 0 0;
+  padding: clamp(10px, 2.2vmin, 16px) clamp(12px, 3vmin, 20px) max(clamp(10px, 2.4vmin, 16px), env(safe-area-inset-bottom));
+}
+.tray-top { display: flex; align-items: center; gap: clamp(8px, 2vmin, 14px); }
+.tray-top .recent { flex: 1 1 auto; min-width: 0; }
+.zoom-dock { position: static; flex: 0 0 auto; display: flex; gap: clamp(6px, 1.5vmin, 10px); margin: 0; }
+.zoom-dock .iconbtn { width: clamp(42px, 9vmin, 56px); height: clamp(42px, 9vmin, 56px); padding: clamp(5px, 1.3vmin, 9px); filter: none; }
+
+/* selection effect: the active-colour chip bounces, the chosen crayon lifts with a ring (no clip) */
+.current-color { transition: transform .12s ease; }
+.current-color.pick { animation: chip-pop .34s ease; }
+@keyframes chip-pop { 0% { transform: scale(1); } 42% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.rack { padding-top: clamp(12px, 2.6vmin, 18px); }
+.crayon { transition: transform .1s ease, box-shadow .1s ease; }
+.crayon[aria-pressed="true"] { transform: translateY(-6px) scale(1.04); box-shadow: inset 0 0 0 5px #fff; }
+.crayon.justpicked { animation: crayon-pop .3s ease; }
+@keyframes crayon-pop { 0% { transform: translateY(0) scale(1); } 45% { transform: translateY(-9px) scale(1.08); } 100% { transform: translateY(-6px) scale(1.04); } }
