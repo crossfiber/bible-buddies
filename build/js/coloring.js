@@ -97,7 +97,7 @@ const ColoringScreen = (function () {
     hex = hex.toUpperCase();
     recentColors = recentColors.filter((c) => c !== hex);
     recentColors.unshift(hex);
-    if (recentColors.length > 12) recentColors.length = 12;
+    if (recentColors.length > 6) recentColors.length = 6;
     renderRecent();
   }
   function renderRecent() {
