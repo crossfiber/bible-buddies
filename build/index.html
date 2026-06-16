@@ -55,13 +55,9 @@
     <!-- ===================== GALLERY ===================== -->
     <section class="screen" data-screen="gallery" id="screen-gallery" hidden>
       <header class="bar">
-        <button class="nav-btn" data-nav="sections" type="button" aria-label="Back to sections">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><polyline points="28,12 16,24 28,36" /></svg>
-        </button>
+        <button class="iconbtn" data-nav="sections" type="button" aria-label="Back to sections"><img src="../assets/ui/icon-back.png" alt="" draggable="false" /></button>
         <h2 class="gallery-title" id="gallery-title"></h2>
-        <button class="bar-logo" data-nav="home" type="button" aria-label="Home">
-          <img src="../assets/branding/mascot.png" alt="" draggable="false" />
-        </button>
+        <button class="iconbtn" data-nav="home" type="button" aria-label="Home"><img src="../assets/ui/icon-home.png" alt="" draggable="false" /></button>
       </header>
       <div class="gallery" id="gallery-grid"></div>
     </section>
@@ -73,6 +69,10 @@
           <button class="iconbtn" data-nav="home" type="button" aria-label="Home"><img src="../assets/ui/icon-home.png" alt="" draggable="false" /></button>
           <button class="iconbtn" data-nav="gallery" type="button" aria-label="Back to pictures"><img src="../assets/ui/icon-back.png" alt="" draggable="false" /></button>
         </div>
+        <div class="bar-group zoom-group">
+          <button class="iconbtn" id="btn-zoom-out" type="button" aria-label="Zoom out"><img src="../assets/ui/icon-zoomout.png" alt="" draggable="false" /></button>
+          <button class="iconbtn" id="btn-zoom-in" type="button" aria-label="Zoom in"><img src="../assets/ui/icon-zoomin.png" alt="" draggable="false" /></button>
+        </div>
         <div class="bar-group">
           <button class="iconbtn" id="btn-undo" type="button" aria-label="Undo"><img src="../assets/ui/icon-undo.png" alt="" draggable="false" /></button>
           <button class="iconbtn" id="btn-clear" type="button" aria-label="Start over"><img src="../assets/ui/icon-erase.png" alt="" draggable="false" /></button>
@@ -80,10 +80,6 @@
       </header>
       <section class="stage" id="stage">
         <canvas id="paper" aria-label="Coloring picture"></canvas>
-        <div class="zoom-controls" aria-label="Zoom">
-          <button class="zoom-btn" id="btn-zoom-in" type="button" aria-label="Zoom in"><img src="../assets/ui/icon-zoomin.png" alt="" draggable="false" /></button>
-          <button class="zoom-btn" id="btn-zoom-out" type="button" aria-label="Zoom out"><img src="../assets/ui/icon-zoomout.png" alt="" draggable="false" /></button>
-        </div>
       </section>
       <footer class="tray" aria-label="Colors">
         <div class="tray-top">

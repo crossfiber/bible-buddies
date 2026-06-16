@@ -539,3 +539,20 @@ html, body {
   animation: fillburst .42s ease-out forwards;
 }
 @keyframes fillburst { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(2.4); opacity: 0; } }
+
+/* ===================== UI refresh v2: palette panel, zoom-in-bar, gallery icons ===================== */
+/* the colour palette is now its own designated panel */
+.tray {
+  background: #fff;
+  border-top: var(--outline) solid var(--ink);
+  border-radius: clamp(20px, 6vw, 34px) clamp(20px, 6vw, 34px) 0 0;
+  padding: clamp(10px, 2.2vmin, 16px) clamp(10px, 2.6vmin, 18px) clamp(8px, 2vmin, 14px);
+}
+/* fit six round buttons across the toolbar (home,back, zoom-,zoom+, undo,erase) */
+.bar .iconbtn { width: clamp(44px, 9.5vmin, 64px); height: clamp(44px, 9.5vmin, 64px); padding: clamp(6px, 1.4vmin, 10px); }
+.zoom-group { gap: clamp(6px, 1.5vmin, 10px); }   /* zoom in/out kept close together */
+.zoom-controls { display: none; }                 /* old on-canvas dock removed */
+
+/* gallery top bar matches the coloring screen: clean + icon buttons */
+.screen[data-screen="gallery"] .bar { background: transparent; border-bottom: none; }
+.gallery-title { text-shadow: 0 1px 0 #fff, 0 2px 0 #fff; }
