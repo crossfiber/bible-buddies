@@ -589,3 +589,16 @@ html, body { width: 100%; height: 100%; height: 100dvh; }
   padding-top: max(clamp(8px, 2vmin, 16px), env(safe-area-inset-top));
 }
 .tray { padding-bottom: max(clamp(10px, 2.4vmin, 16px), env(safe-area-inset-bottom)); }
+
+/* ===================== temp: palette hidden (code kept), zoom floats higher ===================== */
+.tray { display: none; }                 /* color palette off the page for now (markup + JS kept) */
+.zoom-dock {                             /* float the zoom pair in the lower-right, raised up a bit */
+  position: absolute;
+  right: clamp(12px, 4vw, 26px);
+  bottom: clamp(120px, 22vh, 240px);
+  margin: 0;
+  display: flex; flex-direction: column;
+  gap: clamp(8px, 2vmin, 12px);
+  z-index: 5;
+}
+.zoom-dock .iconbtn { width: clamp(48px, 10vmin, 66px); height: clamp(48px, 10vmin, 66px); padding: clamp(6px, 1.5vmin, 10px); filter: drop-shadow(3px 3px 0 var(--ink)); }
