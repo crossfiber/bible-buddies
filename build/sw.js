@@ -5,7 +5,7 @@
 //                         This is why a fresh open of the installed app gets the latest build.
 //   - images / fonts / icons / manifest -> cache-first: fast, and they change rarely.
 // Bump CACHE on a release to evict everything old in one shot.
-const CACHE = 'little-lights-v3';
+const CACHE = 'little-lights-v4';
 const SHELL = [
   './', './index.html',
   './css/fonts.css', './css/coloring.css', './css/sections.css',

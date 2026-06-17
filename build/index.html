@@ -58,6 +58,27 @@
         <img src="../assets/branding/logo.png" alt="Little Lights" draggable="false" />
       </button>
       <div class="sections" id="sections-grid"></div>
+
+      <div class="pack-overlay" id="pack-overlay" hidden>
+        <div class="pack-card" id="pack-step-preview">
+          <button class="pack-close" id="pack-close" type="button" aria-label="Close"><svg viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="15" x2="33" y2="33"/><line x1="33" y1="15" x2="15" y2="33"/></svg></button>
+          <p class="pack-title" id="pack-title"></p>
+          <p class="pack-peek">Peek inside!</p>
+          <div class="pack-samples" id="pack-samples"></div>
+          <button class="pack-unlock" id="pack-unlock" type="button"><svg class="pack-unlock__crown" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 37 L8 17 L17 25 L24 11 L31 25 L40 17 L40 37 Z"/><rect x="8" y="37" width="32" height="5"/></svg><span>Ask a grown-up to unlock</span></button>
+        </div>
+        <div class="pack-card" id="pack-step-hold" hidden>
+          <p class="pack-title">Grown-ups only</p>
+          <p class="pack-peek">Press and hold the button</p>
+          <button class="gate-hold" id="pack-hold" type="button" aria-label="Press and hold to unlock"><svg viewBox="0 0 48 48" aria-hidden="true"><circle class="gate-ring" cx="24" cy="24" r="20"/><path d="M17 24 l5 5 l9 -11"/></svg></button>
+          <button class="gate-cancel" id="pack-hold-cancel" type="button">Back</button>
+        </div>
+        <div class="pack-card" id="pack-step-soon" hidden>
+          <p class="pack-title">Coming soon!</p>
+          <p class="pack-text">New picture packs are on the way. Thanks for peeking!</p>
+          <button class="pack-done" id="pack-soon-done" type="button">OK</button>
+        </div>
+      </div>
     </section>
 
     <!-- ===================== GALLERY ===================== -->
