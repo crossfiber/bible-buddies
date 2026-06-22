@@ -158,35 +158,52 @@ const Sound = (function () {
   }
 
   // --- the lullaby --------------------------------------------------------
-  // A calm music-box melody in C major, scheduled a little ahead of time with a
-  // lookahead clock so it stays smooth regardless of frame timing.
-  const MUSIC_LEVEL = 0.16;
-  const BEAT = 0.5;                                  // slow, soothing tempo
-  const N = { C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.0, A4: 440.0, C5: 523.25, G3: 196.0 };
-  const MELODY = [
-    [N.C4, 1], [N.E4, 1], [N.G4, 1], [N.E4, 1],
-    [N.F4, 1], [N.A4, 1], [N.G4, 2],
-    [N.E4, 1], [N.G4, 1], [N.C5, 1], [N.G4, 1],
-    [N.F4, 1], [N.D4, 1], [N.C4, 2]
-  ];
+  // Not a single looping riff — a small musical arc so it actually goes somewhere:
+  //   A   calm opening (melody alone)
+  //   A'  a rising answer, a little fuller (shimmer joins)
+  //   B   a brief swell to a high point, warm bass underneath  <- the build-up / payoff
+  //   A'' a falling line that lands and rests on a long tonic, then breathes, before it loops
+  // Each note carries a loudness "lvl" so the piece grows and settles instead of droning,
+  // and layers (octave shimmer, a sustained root) come in as it builds.
+  const MUSIC_LEVEL = 0.18;        // music-bus level; effect ducking still rides on this
+  const BEAT = 0.52;               // gentle, unhurried tempo
+  const N = {
+    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
+    C5: 523.25, D5: 587.33, C3: 130.81, F3: 174.61
+  };
+
+  // Build a phrase: rows of [freq, beats] at a shared loudness, optional octave shimmer,
+  // and an optional sustained bass root struck on the phrase's first beat.
+  function phrase(rows, lvl, shim, bassRoot) {
+    return rows.map(function (r, i) {
+      return { f: r[0], b: r[1], lvl: lvl, shim: !!shim, bass: (i === 0 ? (bassRoot || 0) : 0) };
+    });
+  }
+  const SONG = [].concat(
+    phrase([[N.C4,1],[N.E4,1],[N.G4,1],[N.E4,1],[N.F4,1],[N.A4,1],[N.G4,2]],            0.58, false, 0),
+    phrase([[N.E4,1],[N.G4,1],[N.C5,1],[N.G4,1],[N.A4,1],[N.F4,1],[N.E4,1],[N.D4,1]],   0.78, true,  0),
+    phrase([[N.F4,1],[N.A4,1],[N.C5,1],[N.A4,1],[N.G4,1],[N.B4,1],[N.D5,2]],            1.00, true,  N.F3),
+    phrase([[N.C5,1],[N.B4,1],[N.A4,1],[N.G4,1],[N.E4,1],[N.F4,1],[N.C4,4]],            0.64, true,  N.C3)
+  );
+
   let musicTimer = null;
   let nextNoteTime = 0;
   let step = 0;
 
-  function scheduleNote(freq, beats, when) {
-    tone(musicGain, freq, when, Math.min(beats * BEAT * 0.95, 1.4), 0.5, 'triangle');
-    tone(musicGain, freq * 2, when, Math.min(beats * BEAT * 0.6, 0.7), 0.16, 'sine');
-    // a soft low root under the first beat of each phrase for warmth
-    if (step === 0 || step === 7) tone(musicGain, N.G3, when, beats * BEAT, 0.3, 'sine');
+  function scheduleNote(note, when) {
+    const peak = 0.5 * note.lvl;
+    tone(musicGain, note.f, when, Math.min(note.b * BEAT * 0.95, 1.6), peak, 'triangle');
+    if (note.shim) tone(musicGain, note.f * 2, when, Math.min(note.b * BEAT * 0.6, 0.7), 0.14 * note.lvl, 'sine');
+    if (note.bass) tone(musicGain, note.bass, when, 8 * BEAT * 0.9, 0.28, 'sine'); // soft sustained root
   }
 
   function scheduler() {
-    // queue any notes due within the next 200ms, then sleep
-    while (nextNoteTime < ctx.currentTime + 0.2) {
-      const pair = MELODY[step];
-      scheduleNote(pair[0], pair[1], nextNoteTime);
-      nextNoteTime += pair[1] * BEAT;
-      step = (step + 1) % MELODY.length;
+    // queue any notes due within the next 250ms, then sleep
+    while (nextNoteTime < ctx.currentTime + 0.25) {
+      const note = SONG[step];
+      scheduleNote(note, nextNoteTime);
+      nextNoteTime += note.b * BEAT;
+      step = (step + 1) % SONG.length;
     }
   }
 
