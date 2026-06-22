@@ -345,7 +345,7 @@ const ColoringScreen = (function () {
         label: pageRegions && pageRegions.label,
         sizes: pageRegions && pageRegions.sizes,
       });
-      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); fillBurst(clientX, clientY); sparkleBurst(clientX, clientY); }
+      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); sparkleBurst(clientX, clientY); }
     } catch (err) {
       // Expected only if the canvas is tainted (file:// without inlined pages).
       console.warn('Coloring fill skipped: could not read canvas pixels. ' +

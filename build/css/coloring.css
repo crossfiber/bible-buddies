@@ -796,3 +796,8 @@ html, body { height: 100%; }                                   /* drop 100dvh */
   25%  { opacity: 1; transform: translate(calc(var(--dx) * .45), calc(var(--dy) * .45)) scale(1.1) rotate(calc(var(--r) * .45)); }
   100% { transform: translate(var(--dx), var(--dy)) scale(.15) rotate(var(--r)); opacity: 0; }
 }
+
+/* ===================== home tiles: same size, lined up under the logo (Color was too big) ===================== */
+.home-btn { width: clamp(210px, 60vw, 270px); margin-inline: auto; }
+.home-btn__face { width: 100%; height: clamp(110px, 28vmin, 140px); display: grid; place-items: end center; }
+.home-btn__img { width: auto; height: auto; max-width: 90%; max-height: 100%; }
