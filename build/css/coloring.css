@@ -808,3 +808,9 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .iconbtn:active { box-shadow: 2px 2px 0 var(--ink); }
 .iconbtn:focus, .iconbtn:focus-visible, .iconbtn:active { outline: none; }
 .iconbtn img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; pointer-events: none; }
+
+/* ===================== home tiles v2: size stickers by height (no overflow), lined up + roomy ===================== */
+.home-buttons { flex-direction: column; align-items: center; gap: clamp(24px, 6vmin, 42px); }
+.home-btn { width: auto; max-width: 86vw; }
+.home-btn__face { width: auto; height: auto; display: block; place-items: initial; }
+.home-btn__img { width: auto; height: clamp(132px, 33vmin, 182px); max-height: none; max-width: 84vw; display: block; }
