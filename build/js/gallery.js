@@ -37,7 +37,7 @@ const GalleryScreen = (function () {
       img.className = 'card__img';
       img.alt = '';
       img.draggable = false;
-      const src = base + page.thumb;
+      const src = (window.ColoringPages && window.ColoringPages[page.file]) ? window.ColoringPages[page.file] : (base + page.thumb);
       if (observer) { img.dataset.src = src; } else { img.src = src; }
       frame.appendChild(img);
       card.appendChild(frame);
