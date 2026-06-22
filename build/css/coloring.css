@@ -770,3 +770,8 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .pack-done { padding: clamp(8px,2vmin,12px) clamp(24px,6vw,38px); background: var(--green); color: #fff;
   border: var(--outline) solid var(--ink); border-radius: 999px; font-family: var(--display); font-weight: 400; font-size: clamp(16px,4.2vmin,22px); cursor: pointer; touch-action: none; }
 .pack-done:active { transform: translateY(2px); }
+
+/* ===================== home: vertical activity buttons, one-line labels ===================== */
+.home-buttons { flex-direction: column; align-items: center; gap: clamp(14px, 3.5vmin, 30px); }
+.home-btn__face { width: clamp(126px, 36vmin, 184px); }
+.home-btn__label { white-space: nowrap; font-size: clamp(20px, 5.2vmin, 30px); }

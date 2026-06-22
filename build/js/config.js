@@ -3,7 +3,7 @@
 const ColoringConfig = {
   // App identity. The logo image carries the wordmark; the tagline is for grown-ups.
   appName: 'Little Lights',
-  tagline: 'Coloring & learning for Christian kids',
+  tagline: 'Coloring & learning for children of God',
 
   // Where line-art pages and their thumbs live, relative to /build.
   assetBase: '../assets/coloring-pages/',
