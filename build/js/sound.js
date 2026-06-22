@@ -241,3 +241,7 @@ const Sound = (function () {
 
   return { play: play, toggle: toggle, setMuted: setMuted, isMuted: isMuted, arm: arm };
 })();
+
+// top-level const stays lexical (not a window property), so publish it explicitly
+// for the `window.Sound` guards used across the other modules.
+window.Sound = Sound;
