@@ -27,7 +27,7 @@ const ColoringConfig = {
     { id: 'space',         title: 'Space',         art: 'icon-space.png',   color: '#8E5BC4' },
     { id: 'weather',       title: 'Weather',       art: 'icon-weather.png', color: '#3DA7DC' },
     { id: 'ocean',    title: 'Ocean Animals',  art: 'pack-ocean-1.png',    color: '#20B2AA' },
-    { id: 'vehicles', title: 'Things That Go', art: 'pack-vehicles-1.png', color: '#F7941E' },
+    { id: 'vehicles', title: 'Things That Go', art: 'pack-vehicles-1.png', color: '#2C6FB5' },
   ],
 
   // The crayon rack. A broad, kid-friendly spread of hues + shades, grounded in the house
