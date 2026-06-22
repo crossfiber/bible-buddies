@@ -801,3 +801,10 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .home-btn { width: clamp(210px, 60vw, 270px); margin-inline: auto; }
 .home-btn__face { width: 100%; height: clamp(110px, 28vmin, 140px); display: grid; place-items: end center; }
 .home-btn__img { width: auto; height: auto; max-width: 90%; max-height: 100%; }
+
+/* ===================== button tap artifact: drop the filter re-paint flash, kill all highlights ===================== */
+* { -webkit-tap-highlight-color: transparent; }
+.iconbtn { filter: none; box-shadow: 3px 3px 0 var(--ink); }
+.iconbtn:active { box-shadow: 2px 2px 0 var(--ink); }
+.iconbtn:focus, .iconbtn:focus-visible, .iconbtn:active { outline: none; }
+.iconbtn img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; pointer-events: none; }
