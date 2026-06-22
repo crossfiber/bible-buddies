@@ -33,9 +33,9 @@ const Sound = (function () {
     limiter.release.value = 0.18;
 
     master = ctx.createGain();
-    master.gain.value = 0.9;
+    master.gain.value = 1.0;
     sfxGain = ctx.createGain();
-    sfxGain.gain.value = 0.55;
+    sfxGain.gain.value = 0.9;
     musicGain = ctx.createGain();
     musicGain.gain.value = 0.0; // faded up when the lullaby starts
 
@@ -165,7 +165,7 @@ const Sound = (function () {
   //   A'' a falling line that lands and rests on a long tonic, then breathes, before it loops
   // Each note carries a loudness "lvl" so the piece grows and settles instead of droning,
   // and layers (octave shimmer, a sustained root) come in as it builds.
-  const MUSIC_LEVEL = 0.18;        // music-bus level; effect ducking still rides on this
+  const MUSIC_LEVEL = 0.42;        // music-bus level; effect ducking still rides on this
   const BEAT = 0.52;               // gentle, unhurried tempo
   const N = {
     C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
