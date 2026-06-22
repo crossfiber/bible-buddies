@@ -814,3 +814,8 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .home-btn { width: auto; max-width: 86vw; }
 .home-btn__face { width: auto; height: auto; display: block; place-items: initial; }
 .home-btn__img { width: auto; height: clamp(132px, 33vmin, 182px); max-height: none; max-width: 84vw; display: block; }
+
+/* ===================== iconbtn ring fix: straight-down shadow kills the diagonal-offset "white notch" seam ===================== */
+.iconbtn { box-shadow: 0 3px 0 var(--ink); filter: none; }
+.iconbtn:active { box-shadow: 0 1px 0 var(--ink); }
+.iconbtn--save { box-shadow: 0 3px 0 var(--ink); }
