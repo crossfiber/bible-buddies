@@ -775,3 +775,8 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .home-buttons { flex-direction: column; align-items: center; gap: clamp(14px, 3.5vmin, 30px); }
 .home-btn__face { width: clamp(126px, 36vmin, 184px); }
 .home-btn__label { white-space: nowrap; font-size: clamp(20px, 5.2vmin, 30px); }
+
+/* ===================== home tiles: equal size, bottom-aligned, lined up under the logo ===================== */
+.home-btn { width: 100%; max-width: clamp(230px, 64vw, 300px); margin-inline: auto; }
+.home-btn__face { width: 100%; height: clamp(120px, 30vmin, 150px); display: grid; place-items: end center; }
+.home-btn__img { width: auto; height: auto; max-width: 86%; max-height: 100%; }
