@@ -819,3 +819,33 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .iconbtn { box-shadow: 0 3px 0 var(--ink); filter: none; }
 .iconbtn:active { box-shadow: 0 1px 0 var(--ink); }
 .iconbtn--save { box-shadow: 0 3px 0 var(--ink); }
+
+/* ===================== sound: speaker toggle (home top-right) ===================== */
+.mute-btn {
+  position: absolute;
+  top: clamp(12px, 3vmin, 22px);
+  right: clamp(12px, 3vmin, 22px);
+  width: clamp(48px, 11vmin, 64px);
+  height: clamp(48px, 11vmin, 64px);
+  padding: clamp(8px, 1.8vmin, 12px);
+  display: grid; place-items: center;
+  background: #fff;
+  border: var(--outline) solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0 3px 0 var(--ink);     /* straight-down sticker shadow, no notch */
+  cursor: pointer;
+  z-index: 5;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.mute-btn:active { box-shadow: 0 1px 0 var(--ink); transform: translateY(2px); }
+.mute-ico { width: 100%; height: 100%; display: block; overflow: visible; }
+.mute-ico .spk { fill: var(--ink); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.mute-ico .wave { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.mute-ico .slash {
+  stroke: var(--ink); stroke-width: 5; stroke-linecap: round;
+  opacity: 0;                          /* shown only when muted */
+}
+/* muted: hide the sound waves, draw the slash across the speaker */
+.mute-btn.is-muted .wave { opacity: 0; }
+.mute-btn.is-muted .slash { opacity: 1; }

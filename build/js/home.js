@@ -34,6 +34,25 @@ const HomeScreen = (function () {
     wrap.appendChild(frag);
 
     wireGate();
+    wireMute();
+  }
+
+  // Speaker toggle: flips Sound on/off and shows the slash when muted. The slash
+  // visibility is pure CSS keyed off .is-muted, so this just toggles the class.
+  function wireMute() {
+    const btn = document.getElementById('mute-btn');
+    if (!btn || btn.dataset.wired) return;
+    btn.dataset.wired = '1';
+    const reflect = (m) => {
+      btn.classList.toggle('is-muted', m);
+      btn.setAttribute('aria-pressed', m ? 'true' : 'false');
+    };
+    reflect(window.Sound ? Sound.isMuted() : false);
+    btn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (!window.Sound) return;
+      reflect(Sound.toggle());
+    });
   }
 
   // --- parent gate (child-resistant press-and-hold) ----------------------
@@ -80,6 +99,7 @@ const HomeScreen = (function () {
     return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   }
   function bounce(el) {
+    if (window.Sound) Sound.play('locked');
     el.classList.remove('wiggle'); void el.offsetWidth; el.classList.add('wiggle');
   }
 

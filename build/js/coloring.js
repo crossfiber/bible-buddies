@@ -95,6 +95,7 @@ const ColoringScreen = (function () {
   // Pick a NEW colour (crayon or wheel): apply it and remember it at the front of recents.
   function pickColour(hex) {
     applyColour(hex); addRecent(hex);
+    if (window.Sound) Sound.play('pick');
     const el = [...rack.children].find((c) => c.dataset.hex === hex.toUpperCase());
     if (el) { el.classList.remove('justpicked'); void el.offsetWidth; el.classList.add('justpicked'); }
   }
@@ -191,6 +192,7 @@ const ColoringScreen = (function () {
     }, 'image/png');
   }
   function flashSaved() {
+    if (window.Sound) Sound.play('save');
     const t = document.getElementById('save-toast'); if (!t) return;
     t.hidden = false; t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
     setTimeout(() => { t.classList.remove('show'); t.hidden = true; }, 1400);
@@ -345,7 +347,7 @@ const ColoringScreen = (function () {
         label: pageRegions && pageRegions.label,
         sizes: pageRegions && pageRegions.sizes,
       });
-      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); sparkleBurst(clientX, clientY); }
+      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); sparkleBurst(clientX, clientY); if (window.Sound) Sound.play('fill'); }
     } catch (err) {
       // Expected only if the canvas is tainted (file:// without inlined pages).
       console.warn('Coloring fill skipped: could not read canvas pixels. ' +

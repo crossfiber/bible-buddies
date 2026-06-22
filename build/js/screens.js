@@ -30,6 +30,7 @@ const Screens = (function () {
     const now = performance.now();
     if (now < navLocked) return;
     navLocked = now + 300;
+    if (window.Sound) Sound.play('nav');
     show(name, payload);
   }
 

@@ -77,7 +77,7 @@ const SectionsScreen = (function () {
   function closePack() { document.getElementById('pack-overlay').hidden = true; }
 
   function escapeHtml(s) { return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-  function bounce(el) { el.classList.remove('wiggle'); void el.offsetWidth; el.classList.add('wiggle'); }
+  function bounce(el) { if (window.Sound) Sound.play('locked'); el.classList.remove('wiggle'); void el.offsetWidth; el.classList.add('wiggle'); }
 
   function onEnter() { build(); }
   return { register() { Screens.register('sections', onEnter); } };
