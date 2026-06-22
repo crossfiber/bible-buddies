@@ -307,6 +307,30 @@ const ColoringScreen = (function () {
     setTimeout(function () { b.remove(); }, 460);
   }
 
+  // A little burst of colourful sparkles at the tap — the "pizazz" that rewards each fill.
+  const SPARKLE_HUES = ['#FFD23F', '#E8402C', '#3DA7DC', '#5BB749', '#F7941E', '#FFFFFF', '#8E5BC4'];
+  function sparkleBurst(clientX, clientY) {
+    if (!stage) return;
+    const r = stage.getBoundingClientRect();
+    const x = clientX - r.left, y = clientY - r.top;
+    const n = 7;
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('span');
+      s.className = 'sparkle';
+      const ang = (Math.PI * 2 * i / n) + Math.random() * 0.7;
+      const dist = 30 + Math.random() * 30;
+      s.style.left = x + 'px';
+      s.style.top = y + 'px';
+      s.style.setProperty('--dx', (Math.cos(ang) * dist).toFixed(1) + 'px');
+      s.style.setProperty('--dy', (Math.sin(ang) * dist).toFixed(1) + 'px');
+      s.style.setProperty('--r', Math.round(Math.random() * 300 - 150) + 'deg');
+      s.style.background = SPARKLE_HUES[(i + (Math.random() * 7 | 0)) % SPARKLE_HUES.length];
+      s.style.animationDelay = Math.round(Math.random() * 50) + 'ms';
+      stage.appendChild(s);
+      setTimeout(function () { s.remove(); }, 760);
+    }
+  }
+
   function fillAt(clientX, clientY) {
     const pt = clientToImage(clientX, clientY);
     if (!pt) return; // outside the picture — ignore (mis-tap guard)
@@ -321,7 +345,7 @@ const ColoringScreen = (function () {
         label: pageRegions && pageRegions.label,
         sizes: pageRegions && pageRegions.sizes,
       });
-      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); fillBurst(clientX, clientY); }
+      if (changed) { pushUndo(before); ctx.putImageData(work, 0, 0); fillBurst(clientX, clientY); sparkleBurst(clientX, clientY); }
     } catch (err) {
       // Expected only if the canvas is tainted (file:// without inlined pages).
       console.warn('Coloring fill skipped: could not read canvas pixels. ' +

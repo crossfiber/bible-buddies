@@ -779,3 +779,20 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .app button { -webkit-tap-highlight-color: transparent; outline: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 .app button:focus, .app button:focus-visible { outline: none; }
 .app img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; pointer-events: none; }
+
+/* ===================== fill "pizazz": a colourful sparkle burst on every fill ===================== */
+.stage { position: relative; }   /* anchor the bursts to the canvas area */
+.sparkle {
+  position: absolute; z-index: 6; pointer-events: none;
+  width: clamp(13px, 2.6vmin, 19px); height: clamp(13px, 2.6vmin, 19px);
+  margin-left: calc(clamp(13px, 2.6vmin, 19px) / -2);
+  margin-top: calc(clamp(13px, 2.6vmin, 19px) / -2);
+  clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+  filter: drop-shadow(1px 1px 0 var(--ink));
+  animation: sparkle-pop .7s ease-out forwards;
+}
+@keyframes sparkle-pop {
+  0%   { transform: translate(0,0) scale(0) rotate(0deg); opacity: 0; }
+  25%  { opacity: 1; transform: translate(calc(var(--dx) * .45), calc(var(--dy) * .45)) scale(1.1) rotate(calc(var(--r) * .45)); }
+  100% { transform: translate(var(--dx), var(--dy)) scale(.15) rotate(var(--r)); opacity: 0; }
+}
