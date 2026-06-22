@@ -775,3 +775,7 @@ html, body { height: 100%; }                                   /* drop 100dvh */
 .home-buttons { flex-direction: column; align-items: center; gap: clamp(14px, 3.5vmin, 30px); }
 .home-btn__face { width: clamp(126px, 36vmin, 184px); }
 .home-btn__label { white-space: nowrap; font-size: clamp(20px, 5.2vmin, 30px); }
+/* ===================== kill spurious tap artifacts (focus dots / tap-highlight / long-press callout) ===================== */
+.app button { -webkit-tap-highlight-color: transparent; outline: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.app button:focus, .app button:focus-visible { outline: none; }
+.app img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; pointer-events: none; }
